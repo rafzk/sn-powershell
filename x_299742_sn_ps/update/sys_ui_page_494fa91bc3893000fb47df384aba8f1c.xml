@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[function processPS_test(){
+	alert(document.getElementById("QUERY:active=true^directory=false").value);
+}
+
+function processPS(){
+    showLoadingDialog();
+    var ga = new GlideAjax('PowershellProbeAjax');
+    ga.addParam('sysparm_name','execute');
+    ga.addParam('sysparm_mid',document.getElementById("sys_display.QUERY:status=Up").value);
+	ga.addParam('sysparm_mid_script',document.getElementById("QUERY:active=true^directory=false").value);
+	ga.addParam('sysparm_server',document.getElementById("server").value);
+    ga.addParam('sysparm_script',document.getElementById("textareaScript").value);
+    ga.getXML(PowershellProbeAjaxParse);
+}
+
+function PowershellProbeAjaxParse(response){
+	var answer = response.responseXML.documentElement.getAttribute("answer");
+	hideLoadingDialog();
+    var dialog = new GlideDialogWindow('powershell_response');
+    dialog.setTitle('Powershell Response'); //Set the dialog title
+    dialog.setSize(600,600); //Set the dialog size
+    dialog.setPreference("powershell_response", answer);
+    dialog.render();
+}
+]]></client_script>
+        <description>v2</description>
+        <direct>false</direct>
+        <endpoint>x_299742_sn_ps_powershell_utility.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+  <div id='mainContainer' style='margin-left:auto; margin-right:auto; width: 800;'>
+    <div id='shellAppContainer' style='border: 3px gray ridge; width:750px; margin-left:auto;margin-right:auto; background-color:blue;'>
+      <div id='shellTitleBar' style='background-color:#2B07AD;color:white;font-weight:bold;vertical-align:middle;'> <img src="powershell_icon.pngx" width="25" height="25"/>Windows PowerShell Script</div>
+      <div id='shellSettingsContainer' style='background-color:#D5D3E3;color:black;padding:10px;'>
+        <table style='background-color:transparent;'>
+          <tr>
+            <td style='width:200px;'>
+              <label for="QUERY:status=Up" style='padding-right:5px;width:300px;'>MID Server</label>
+            </td>
+            <td>
+              <g:ui_reference label="MID Server" name="QUERY:status=Up" id="mid" table="ecc_agent" size="50"/>
+            </td>
+          </tr>
+          <tr>
+            <td style='width:200px;'>
+              <label for="mid_script" style='padding-right:5px;width:300px;'>MID Server Script File</label>
+            </td>
+            <td>
+              <g:ui_reference label="MID Server Script File" name="QUERY:active=true^directory=false" id="mid_script" table="ecc_agent_script_file" size="50"/>
+            </td>
+          </tr>
+          <tr>
+            <td style='width:200px;'>
+              <label for="server" style='padding-right:5px;width:300px;'>Execute Script on Server</label>
+            </td>
+            <td>
+              <input type="text" id="server" name="server" value="127.0.0.1" size="20"/>
+            </td>
+          </tr>
+        </table>
+      </div>
+	  <div id='shellScriptLabel' style='text-align:left; background-color:#D5D3E3; color:black; padding: 10px;'>
+	    <label for="shellScriptContainer">Script File Parameters (JSON) or Powershell Script</label>
+	  </div>
+      <div id='shellScriptContainer' style=''>
+        <textarea style='width:500px;height:20em;padding:10px;width:100%;background-color:blue;color:white;font-family:Lucida Console,Console,Sans Seriff,Tahoma,Verana;' id='textareaScript' name='script'>$[jvar_script]</textarea>
+      </div>
+      <div id='shellButtonContainer' style='text-align:right; background-color:#D5D3E3; padding: 10px;'>
+        <button name='submit' id='btnSubmit' value='Submit' onclick='processPS();'>Submit</button>
+      </div>
+    </div>
+  </div>
+</j:jelly>]]></html>
+        <name>powershell_utility</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin_SHARE_SHARE</sys_created_by>
+        <sys_created_on>2012-10-18 16:18:42</sys_created_on>
+        <sys_id>494fa91bc3893000fb47df384aba8f1c</sys_id>
+        <sys_mod_count>94</sys_mod_count>
+        <sys_name>powershell_utility</sys_name>
+        <sys_package display_value="sn-powershell" source="x_299742_sn_ps">9603df42db0300100cc4bd513996191f</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="sn-powershell">9603df42db0300100cc4bd513996191f</sys_scope>
+        <sys_update_name>sys_ui_page_494fa91bc3893000fb47df384aba8f1c</sys_update_name>
+        <sys_updated_by>michel_SHARE_SHARE</sys_updated_by>
+        <sys_updated_on>2015-09-18 12:34:28</sys_updated_on>
+    </sys_ui_page>
+</record_update>

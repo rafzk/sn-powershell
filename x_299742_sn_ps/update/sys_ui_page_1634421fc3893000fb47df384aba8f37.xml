@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script/>
+        <description>v2</description>
+        <direct>false</direct>
+        <endpoint>x_299742_sn_ps_powershell_response.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+
+<g:evaluate var="jvar_output" >
+  var rString = RP.getWindowProperties().get('powershell_response');
+  var xmldoc = new XMLDocument(GlideStringUtil.unEscapeHTML(rString));
+  var output = xmldoc.getNodeText("//response/output");
+  output = GlideStringUtil.base64Decode(output);
+  output;
+</g:evaluate>
+
+<g:evaluate var="jvar_error">
+  var rString = RP.getWindowProperties().get('powershell_response');
+  var xmldoc = new XMLDocument(GlideStringUtil.unEscapeHTML(rString));
+  var error = xmldoc.getNodeText("//response/error");
+  error = GlideStringUtil.base64Decode(error);
+  error;
+</g:evaluate>
+
+<div style='width:100%;background-color:#A8A4BF;'>
+
+<div style='margin-left: auto; margin-right: auto;'>
+  <textarea style='font-size: 1em; background-color: black; color: white; width: 600px; height: 20em; padding: 5px; margin-left:auto; margin-right:auto' readonly='readonly'>${jvar_output}</textarea>
+
+<j2:if test="${jvar_error!='' &amp;&amp; jvar_error!='null'}">
+  <div style='font-size: 1.2em; font-weight: bold; color: black;margin-left:auto; margin-right:auto'>Error</div>
+  <textarea style='font-size: 1em; background-color: #BB3333; color: white; width: 600px; height: 10em; padding: 5px; margin-left:auto; margin-right:auto' readonly='readonly'>${jvar_error}</textarea>
+</j2:if>
+</div>
+
+</div>
+</j:jelly>]]></html>
+        <name>powershell_response</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin_SHARE_SHARE</sys_created_by>
+        <sys_created_on>2012-10-18 17:40:14</sys_created_on>
+        <sys_id>1634421fc3893000fb47df384aba8f37</sys_id>
+        <sys_mod_count>133</sys_mod_count>
+        <sys_name>powershell_response</sys_name>
+        <sys_package display_value="sn-powershell" source="x_299742_sn_ps">9603df42db0300100cc4bd513996191f</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="sn-powershell">9603df42db0300100cc4bd513996191f</sys_scope>
+        <sys_update_name>sys_ui_page_1634421fc3893000fb47df384aba8f37</sys_update_name>
+        <sys_updated_by>michel_SHARE_SHARE</sys_updated_by>
+        <sys_updated_on>2015-09-18 10:57:31</sys_updated_on>
+    </sys_ui_page>
+</record_update>
